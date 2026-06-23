@@ -251,4 +251,16 @@ library CoreWriterLib {
             abi.encodePacked(uint8(1), HLConstants.BORROW_LEND_ACTION, abi.encode(encodedOperation, token, amountWei))
         );
     }
+
+    /*//////////////////////////////////////////////////////////////
+                            Abstraction
+    //////////////////////////////////////////////////////////////*/
+
+    /// @dev abstraction: 1 = disabled, 2 = unifiedAccount, 3 = portfolioMargin
+    /// @dev `user` can either be the master user or a sub-account
+    function setAbstraction(address user, uint8 abstraction) internal {
+        coreWriter.sendRawAction(
+            abi.encodePacked(uint8(1), HLConstants.SET_ABSTRACTION_ACTION, abi.encode(user, abstraction))
+        );
+    }
 }

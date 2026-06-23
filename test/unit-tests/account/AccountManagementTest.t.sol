@@ -37,6 +37,12 @@ contract OrderCanceller {
     }
 }
 
+contract AbstractionSetter {
+    function setAbstraction(address user, uint8 abstraction) public {
+        CoreWriterLib.setAbstraction(user, abstraction);
+    }
+}
+
 contract AccountManagementTest is Test {
     using PrecompileLib for address;
     using HLConversions for *;
@@ -279,6 +285,42 @@ contract AccountManagementTest is Test {
         CoreSimulatorLib.nextBlock();
 
         // HYPE balance should not have changed (order was cancelled before execution)
+    }
+
+    /*//////////////////////////////////////////////////////////////
+                        SET ABSTRACTION TESTS
+    //////////////////////////////////////////////////////////////*/
+
+    function testSetAbstraction() public {
+        vm.startPrank(user);
+        AbstractionSetter setter = new AbstractionSetter();
+        CoreSimulatorLib.forceAccountActivation(address(setter));
+
+        // Set each supported abstraction mode for the calling account
+        setter.setAbstraction(address(setter), HLConstants.ABSTRACTION_DISABLED);
+        CoreSimulatorLib.nextBlock();
+
+        setter.setAbstraction(address(setter), HLConstants.ABSTRACTION_UNIFIED_ACCOUNT);
+        CoreSimulatorLib.nextBlock();
+
+        setter.setAbstraction(address(setter), HLConstants.ABSTRACTION_PORTFOLIO_MARGIN);
+        CoreSimulatorLib.nextBlock();
+
+        // All abstraction updates should succeed without revert
+    }
+
+    function testSetAbstractionForSubAccount() public {
+        vm.startPrank(user);
+        AbstractionSetter setter = new AbstractionSetter();
+        CoreSimulatorLib.forceAccountActivation(address(setter));
+
+        // `user` can be the master user or a sub-account
+        address subAccount = makeAddr("subAccount");
+        setter.setAbstraction(subAccount, HLConstants.ABSTRACTION_PORTFOLIO_MARGIN);
+
+        CoreSimulatorLib.nextBlock();
+
+        // Sub-account abstraction update should succeed without revert
     }
 
     /*//////////////////////////////////////////////////////////////

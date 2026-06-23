@@ -93,6 +93,7 @@ library HLConstants {
     uint24 constant APPROVE_BUILDER_FEE_ACTION = 12;
     uint24 constant SEND_ASSET_ACTION = 13;
     uint24 constant BORROW_LEND_ACTION = 15;
+    uint24 constant SET_ABSTRACTION_ACTION = 16;
 
     /*//////////////////////////////////////////////////////////////
                         Limit Order Time in Force
@@ -109,6 +110,11 @@ library HLConstants {
     // `encodedOperation` for `borrowLend` CoreWriter action
     uint8 public constant BLP_SUPPLY = 0;
     uint8 public constant BLP_WITHDRAW = 1;
+
+    // `abstraction` for `setAbstraction` CoreWriter action
+    uint8 public constant ABSTRACTION_DISABLED = 1;
+    uint8 public constant ABSTRACTION_UNIFIED_ACCOUNT = 2;
+    uint8 public constant ABSTRACTION_PORTFOLIO_MARGIN = 3;
 
     /*//////////////////////////////////////////////////////////////
                         Dex Constants
