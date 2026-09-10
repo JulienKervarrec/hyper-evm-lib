@@ -1,3 +1,7 @@
+## Parcours français
+
+[Six chapitres pour intégrer HyperEVM et HyperCore](docs/fr/README.md) : CoreWriter, identité du compte, conversions, ponts, précompiles et checklist. Lecture statique du fork ; aucune transaction ni exécution de tests.
+
 # hyper-evm-lib
 ![License](https://img.shields.io/github/license/hyperliquid-dev/hyper-evm-lib)
 ![Solidity](https://img.shields.io/badge/solidity-%3E%3D0.8.0-blue)
